@@ -9,10 +9,10 @@ Este repositorio contiene el desarrollo del módulo `don_tello` para la gestión
 ```
 addons/
 ├── don_tello/
-│   ├── models/
-│   ├── views/
+│   ├── models/...
+│   ├── views/...
 │   ├── __manifest__.py
-│   └── ...
+│   └── 
 ```
 
 ---
@@ -21,7 +21,7 @@ addons/
 
 | Desarrollador | Rama de desarrollo     |
 |---------------|------------------------|
-| Adria         | `dev/adria`            |
+| Adrian         | `dev/adria`            |
 | Pablo         | `dev/pablo`            |
 | Producción    | `main` (vía Pull Request) |
 
@@ -36,7 +36,7 @@ git clone https://github.com/adrmurbau/odoo-don-tello.git
 cd odoo-don-tello
 ```
 
-> ⚠️ Asegúrate de tener acceso al repositorio en GitHub (comunícate con Adria si no lo tienes).
+> ⚠️ Asegúrate de tener acceso al repositorio en GitHub (comunícate con Adrian si no lo tienes).
 
 ---
 
@@ -81,7 +81,7 @@ git pull origin main
 ## ✅ Flujo de trabajo
 
 1. Trabajas en `dev/pablo`.
-2. Cuando termines una funcionalidad estable, **avisas a Adria o haces un Pull Request hacia `main`**.
+2. Cuando termines una funcionalidad estable, **avisas a Adrian o haces un Pull Request hacia `main`**.
 3. Se revisa y se hace merge solo si todo funciona correctamente.
 
 ---
@@ -103,6 +103,4 @@ Si tienes cualquier duda:
 - Pregunta en los issues del repositorio si es algo general.
 
 ---
-
-¡A programar con estilo! 😎
 
