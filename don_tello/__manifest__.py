@@ -1,0 +1,20 @@
+{
+    'name': 'Miembros - Don Tello',
+    'version': '1.0',
+    'summary': 'Gestión de socios y actividades del club de golf Don Tello',
+    'author': 'Adrian Muriel y Pablo Galván',
+    'depends': ['base', 'mail'],
+    'data': [
+        'security/security.xml',
+    'security/ir.model.access.csv',
+    'views/golf_menus.xml',  
+    'views/golf_member_views.xml',
+    'views/golf_membership_type_views.xml',
+    'views/golf_event_views.xml',
+    'views/golf_reservation_views.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'license': 'LGPL-3',
+}

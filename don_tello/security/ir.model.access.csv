@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_golf_member_user,golf.member,model_golf_member,base.group_user,1,1,1,1
+access_golf_membership_type_user,golf.membership.type,model_golf_membership_type,base.group_user,1,1,1,1
+access_golf_reservation_user,golf.reservation.user,model_golf_reservation,base.group_user,1,1,1,1
+access_golf_event_user,golf.event.user,model_golf_event,base.group_user,1,1,1,1

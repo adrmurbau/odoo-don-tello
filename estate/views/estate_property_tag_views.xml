@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <!-- Vista de lista -->
+        <record id="view_estate_property_tag_tree" model="ir.ui.view">
+            <field name="name">estate.property.tag.list</field>
+            <field name="model">estate.property.tag</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Vista de formulario -->
+        <record id="view_estate_property_tag_form" model="ir.ui.view">
+            <field name="name">estate.property.tag.form</field>
+            <field name="model">estate.property.tag</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Acción para abrir la vista -->
+        <record id="action_estate_property_tag" model="ir.actions.act_window">
+            <field name="name">Property Tags</field>
+            <field name="res_model">estate.property.tag</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="estate_menu_root" name="Real Estate"/>
+
+        <menuitem id="estate_property_tag_menu" name="Property Tags"
+                parent="estate_menu_root"
+                action="action_estate_property_tag"/>
+    </data>
+</odoo>

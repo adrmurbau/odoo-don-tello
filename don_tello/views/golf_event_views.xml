@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="view_golf_event_form" model="ir.ui.view">
+            <field name="name">golf.event.form</field>
+            <field name="model">golf.event</field>
+            <field name="arch" type="xml">
+                <form string="Evento del Club de Golf">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="location"/>
+                            <field name="description"/>
+                            <field name="member_ids" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_golf_event_list" model="ir.ui.view">
+            <field name="name">golf.event.list</field>
+            <field name="model">golf.event</field>
+            <field name="arch" type="xml">
+                <list string="Eventos">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="location"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_golf_event" model="ir.actions.act_window">
+            <field name="name">Eventos</field>
+            <field name="res_model">golf.event</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="golf_event_menu"
+                  name="Eventos"
+                  parent="golf_main_menu"
+                  sequence="30"
+                  action="action_golf_event"/>
+
+    </data>
+</odoo>
+

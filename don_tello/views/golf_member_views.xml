@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_golf_member_form" model="ir.ui.view">
+            <field name="name">golf.member.form</field>
+            <field name="model">golf.member</field>
+            <field name="arch" type="xml">
+                <form string="Socio del Club de Golf">
+                    <sheet>
+                        <group string="Información Personal">
+                            <field name="name"/>
+                            <field name="edad"/>
+                            <field name="dni"/>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="is_active"/>
+                        </group>
+
+                        <group string="Membresía">
+                            <!-- <field name="tipo_membresia_id"/> -->
+                            <field name="jugador_golf"/>
+                            <field name="tipo_membresia_auto" readonly="1"/>
+                            <field name="fecha_alta"/>
+                            <field name="fecha_baja"/>
+                            <field name="partner_id"/>
+                        </group>
+
+                        <group string="Estado Económico">
+                            <field name="cuotas_pendientes"/>
+                            <!-- <field name="currency_id"/> -->
+                            <field name="estado_pago" readonly="1"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Reservas">
+                                <field name="reservation_ids">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="reservation_date"/>
+                                        <field name="facility"/>
+                                    </list>
+                                </field>
+                            </page>
+
+                            <page string="Eventos">
+                                <field name="event_ids" widget="many2many_tags"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_golf_member_list" model="ir.ui.view">
+            <field name="name">golf.member.list</field>
+            <field name="model">golf.member</field>
+            <field name="arch" type="xml">
+                <list string="Socios del Club de Golf">
+                    <field name="name"/>
+                    <field name="dni"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="tipo_membresia_id"/>
+                    <field name="estado_pago"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_golf_member" model="ir.actions.act_window">
+            <field name="name">Socios</field>
+            <field name="res_model">golf.member</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="golf_member_menu"
+                  name="Socios"
+                  parent="golf_main_menu"
+                  sequence="10"
+                  action="action_golf_member"/>
+    </data>
+</odoo>
+
+
