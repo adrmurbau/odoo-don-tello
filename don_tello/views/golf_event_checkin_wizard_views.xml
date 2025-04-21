@@ -1,0 +1,26 @@
+<odoo>
+    <record id="golf_event_checkin_wizard_form" model="ir.ui.view">
+        <field name="name">golf.event.checkin.wizard.form</field>
+        <field name="model">golf.event.checkin.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Check-In">
+                <group>
+                    <field name="event_id" invisible="1"/>
+                    <field name="member_id"/>
+                </group>
+                <footer>
+                    <button name="action_checkin" type="object" string="Confirmar" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_golf_event_checkin_wizard" model="ir.actions.act_window">
+        <field name="name">Check-In</field>
+        <field name="res_model">golf.event.checkin.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_event_id': active_id}</field>
+    </record>
+</odoo>

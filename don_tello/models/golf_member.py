@@ -28,41 +28,39 @@ class GolfMember(models.Model):
         ('pendiente', 'Pendiente'),
         ('moroso', 'Moroso'),
     ], string='Estado del Pago', default='al_dia', tracking=True,
-    compute='_compute_estado_pago', store=True)
+       compute='_compute_estado_pago', store=True)
 
-    reservation_ids = fields.One2many('golf.reservation', 'member_id', string='Reservas')
+    # reservation_ids = fields.One2many('golf.reservation', 'member_id', string='Reservas')
     event_ids = fields.Many2many('golf.event', string='Eventos Participados')
 
     @api.depends('cuotas_pendientes')
     def _compute_estado_pago(self):
         for rec in self:
-            if rec.cuotas_pendientes > 0 and rec.cuotas_pendientes <= 1:
+            if rec.cuotas_pendientes > 1:
+                rec.estado_pago = 'moroso'
+            elif rec.cuotas_pendientes == 1:
                 rec.estado_pago = 'pendiente'
-            elif rec.cuotas_pendientes>1:
-                rec.estado_pago='moroso'
             else:
                 rec.estado_pago = 'al_dia'
 
     @api.depends('edad', 'jugador_golf')
     def _compute_tipo_membresia(self):
         for rec in self:
-            tipo = "No clasificado"
+            tipo = ''
+            codigo = None
+
             if not rec.jugador_golf:
-                tipo = "No Jugador"
-            elif rec.edad <= 0:
-                tipo = "Desconocida"
-            elif rec.edad < 15:
-                tipo = "No aplica"
-            elif 15 <= rec.edad <= 16:
-                tipo = "Cadete"
-            elif 17 <= rec.edad <= 21:
-                tipo = "Junior"
+                tipo = 'Club'
+                codigo = 'CLUB'
             elif rec.edad >= 50:
-                tipo = "Senior"
-            elif rec.edad >= 22:
-                tipo = "Mayor"
+                tipo = 'Hole in One'
+                codigo = 'HOI'
+            else:
+                tipo = 'Birdie'
+                codigo = 'BIRDIE'
+
             rec.tipo_membresia_auto = tipo
 
-            # Buscar la membresía correspondiente en la base de datos
-            membresia = self.env['golf.membership.type'].search([('name', '=', tipo)], limit=1)
+            # Buscar y asignar el registro real en la base de datos
+            membresia = self.env['golf.membership.type'].search([('code', '=', codigo)], limit=1)
             rec.tipo_membresia_id = membresia if membresia else False
