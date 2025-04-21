@@ -1,0 +1,104 @@
+<odoo>
+  <data>
+
+    <!-- ========= VISTA GENÉRICA (puede ser compartida) ========== -->
+
+    <record id="view_golf_booking_form" model="ir.ui.view">
+      <field name="name">golf.booking.form</field>
+      <field name="model">golf.booking</field>
+      <field name="arch" type="xml">
+        <form string="Reserva">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="booking_datetime"/>
+              <field name="member_id"/>
+              <field name="booking_type" readonly="1"/>
+              <field name="price" readonly="1"/>
+            </group>
+
+            <!-- Green Fee Extras -->
+            <group modifiers="{'invisible': [('booking_type','!=','green_fee')]}">
+              <field name="has_buggy"/>
+              <field name="has_locker"/>
+              <field name="has_parking"/>
+            </group>
+
+            <!-- Clases y Fitting -->
+            <group modifiers="{'invisible': [('booking_type','not in',['lesson','fitting'])]}">
+              <field name="lesson_type"/>
+              <field name="instructor_id" domain="[('department', '=', 'golf')]" modifiers="{'invisible': [('lesson_type','!=','individual')]}"/>
+            </group>
+
+            <!-- Modalidad Escuela Deportiva -->
+            <group modifiers="{'invisible': [('booking_type','!=','school')]}">
+              <field name="school_condition"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_golf_booking_list" model="ir.ui.view">
+      <field name="name">golf.booking.list</field>
+      <field name="model">golf.booking</field>
+      <field name="arch" type="xml">
+        <list string="Reservas">
+          <field name="name"/>
+          <field name="booking_datetime"/>
+          <field name="booking_type"/>
+          <field name="member_id"/>
+          <field name="price"/>
+        </list>
+      </field>
+    </record>
+
+    <!-- ========= ACCIONES CON CONTEXTO PREDEFINIDO ========== -->
+
+    <record id="action_golf_booking_green_fee" model="ir.actions.act_window">
+      <field name="name">Green Fee</field>
+      <field name="res_model">golf.booking</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'default_booking_type': 'green_fee'}</field>
+    </record>
+
+    <record id="action_golf_booking_practice" model="ir.actions.act_window">
+      <field name="name">Prácticas</field>
+      <field name="res_model">golf.booking</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'default_booking_type': 'practice'}</field>
+    </record>
+
+    <record id="action_golf_booking_lesson" model="ir.actions.act_window">
+      <field name="name">Clases de Golf</field>
+      <field name="res_model">golf.booking</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'default_booking_type': 'lesson'}</field>
+    </record>
+
+    <record id="action_golf_booking_fitting" model="ir.actions.act_window">
+      <field name="name">Fitting</field>
+      <field name="res_model">golf.booking</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'default_booking_type': 'fitting'}</field>
+    </record>
+
+    <record id="action_golf_booking_school" model="ir.actions.act_window">
+      <field name="name">Escuelas Deportivas</field>
+      <field name="res_model">golf.booking</field>
+      <field name="view_mode">list,form</field>
+      <field name="context">{'default_booking_type': 'school'}</field>
+    </record>
+
+    <!-- ========= MENÚS DE RESERVAS ========== -->
+
+    <menuitem id="menu_booking_parent" name="Reservas" parent="golf_main_menu" sequence="20"/>
+
+    <menuitem id="menu_booking_green_fee" name="Green Fee" parent="menu_booking_parent" action="action_golf_booking_green_fee" sequence="10"/>
+    <menuitem id="menu_booking_practice" name="Campo de prácticas" parent="menu_booking_parent" action="action_golf_booking_practice" sequence="20"/>
+    <menuitem id="menu_booking_lesson" name="Clases de Golf" parent="menu_booking_parent" action="action_golf_booking_lesson" sequence="30"/>
+    <menuitem id="menu_booking_fitting" name="Fitting" parent="menu_booking_parent" action="action_golf_booking_fitting" sequence="40"/>
+    <menuitem id="menu_booking_school" name="Escuelas Deportivas" parent="menu_booking_parent" action="action_golf_booking_school" sequence="50"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record id="membership_type_club" model="golf.membership.type">
+      <field name="name">Abono Club</field>
+      <field name="code">CLUB</field>
+      <field name="monthly_fee">45.0</field>
+      <field name="promo_fee">35.0</field>
+      <field name="promo_months">6</field>
+      <field name="annual_fee">540.0</field>
+      <field name="payment_type">ambos</field>
+      <field name="club_rights_exempt">1</field>
+      <field name="includes_family">1</field>
+      <field name="max_children_age">24</field>
+      <field name="access_pool">1</field>
+      <field name="access_camps">1</field>
+      <field name="access_golf_practice">1</field>
+      <field name="access_adult_school">1</field>
+      <field name="access_kids_school">1</field>
+      <field name="access_golf_course">0</field>
+      <field name="game_rights_type">none</field>
+      <field name="has_discount_rights">0</field>
+      <field name="has_invitation_rights">0</field>
+      <field name="max_invitations_per_year">0</field>
+      <field name="access_locker">0</field>
+      <field name="locker_type">ninguna</field>
+      <field name="includes_parking">0</field>
+      <field name="is_promotional">0</field>
+      <field name="active">1</field>
+    </record>
+
+    <record id="membership_type_hole_in_one" model="golf.membership.type">
+      <field name="name">Abono Hole in One</field>
+      <field name="code">HOI</field>
+      <field name="monthly_fee">45.0</field>
+      <field name="promo_fee">45.0</field>
+      <field name="promo_months">0</field>
+      <field name="annual_fee">540.0</field>
+      <field name="payment_type">ambos</field>
+      <field name="club_rights_exempt">1</field>
+      <field name="includes_family">1</field>
+      <field name="max_children_age">24</field>
+      <field name="access_pool">1</field>
+      <field name="access_camps">1</field>
+      <field name="access_golf_practice">1</field>
+      <field name="access_adult_school">1</field>
+      <field name="access_kids_school">1</field>
+      <field name="access_golf_course">1</field>
+      <field name="game_rights_type">progressive</field>
+      <field name="has_discount_rights">1</field>
+      <field name="has_invitation_rights">1</field>
+      <field name="max_invitations_per_year">4</field>
+      <field name="access_locker">1</field>
+      <field name="locker_type">grande</field>
+      <field name="includes_parking">1</field>
+      <field name="is_promotional">0</field>
+      <field name="active">1</field>
+    </record>
+
+    <record id="membership_type_birdie" model="golf.membership.type">
+      <field name="name">Abono Plan Birdie</field>
+      <field name="code">BIRDIE</field>
+      <field name="monthly_fee">40.0</field>
+      <field name="promo_fee">40.0</field>
+      <field name="promo_months">0</field>
+      <field name="annual_fee">480.0</field>
+      <field name="payment_type">ambos</field>
+      <field name="club_rights_exempt">1</field>
+      <field name="includes_family">1</field>
+      <field name="max_children_age">24</field>
+      <field name="access_pool">1</field>
+      <field name="access_camps">1</field>
+      <field name="access_golf_practice">1</field>
+      <field name="access_adult_school">1</field>
+      <field name="access_kids_school">1</field>
+      <field name="access_golf_course">1</field>
+      <field name="game_rights_type">none</field>
+      <field name="has_discount_rights">1</field>
+      <field name="has_invitation_rights">1</field>
+      <field name="max_invitations_per_year">2</field>
+      <field name="access_locker">1</field>
+      <field name="locker_type">pequena</field>
+      <field name="includes_parking">0</field>
+      <field name="is_promotional">0</field>
+      <field name="active">1</field>
+    </record>
+  </data>
+</odoo>

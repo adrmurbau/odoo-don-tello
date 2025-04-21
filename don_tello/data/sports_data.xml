@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data noupdate="1">
+
+    <record id="golf_sport_golf" model="golf.sport">
+      <field name="name">Golf</field>
+      <field name="code">GOLF</field>
+      <field name="description">Escuela de Golf para adultos e infantil.</field>
+    </record>
+
+    <record id="golf_sport_padel" model="golf.sport">
+      <field name="name">Padel</field>
+      <field name="code">PADEL</field>
+      <field name="description">Escuela de Padel para diferentes niveles.</field>
+    </record>
+
+    <record id="golf_sport_tenis" model="golf.sport">
+      <field name="name">Tenis</field>
+      <field name="code">TENIS</field>
+      <field name="description">Clases de tenis individuales y en grupo.</field>
+    </record>
+
+    <record id="golf_sport_natacion" model="golf.sport">
+      <field name="name">Natación</field>
+      <field name="code">NAT</field>
+      <field name="description">Actividades de natación para todas las edades.</field>
+    </record>
+
+    <record id="golf_sport_equitacion" model="golf.sport">
+      <field name="name">Equitación</field>
+      <field name="code">EQUI</field>
+      <field name="description">Clases de equitación y doma.</field>
+    </record>
+
+    <record id="golf_sport_fitness" model="golf.sport">
+      <field name="name">Fitness</field>
+      <field name="code">FIT</field>
+      <field name="description">Actividades dirigidas de fitness y bienestar.</field>
+    </record>
+
+  </data>
+</odoo>

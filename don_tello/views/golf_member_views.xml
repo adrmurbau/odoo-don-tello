@@ -32,16 +32,6 @@
                         </group>
 
                         <notebook>
-                            <page string="Reservas">
-                                <field name="reservation_ids">
-                                    <list>
-                                        <field name="name"/>
-                                        <field name="reservation_date"/>
-                                        <field name="facility"/>
-                                    </list>
-                                </field>
-                            </page>
-
                             <page string="Eventos">
                                 <field name="event_ids" widget="many2many_tags"/>
                             </page>

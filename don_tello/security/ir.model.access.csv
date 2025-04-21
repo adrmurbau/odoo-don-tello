@@ -1,5 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_golf_member_user,golf.member,model_golf_member,base.group_user,1,1,1,1
 access_golf_membership_type_user,golf.membership.type,model_golf_membership_type,base.group_user,1,1,1,1
-access_golf_reservation_user,golf.reservation.user,model_golf_reservation,base.group_user,1,1,1,1
+access_golf_booking_all,golf.booking,model_golf_booking,,1,1,1,1
 access_golf_event_user,golf.event.user,model_golf_event,base.group_user,1,1,1,1
+access_golf_event_attendance,golf.event.attendance,model_golf_event_attendance,,1,1,1,1
+access_golf_event_checkin_wizard,golf.event.checkin.wizard,model_golf_event_checkin_wizard,,1,1,1,1
+access_golf_event_checkout_wizard,golf.event.checkout.wizard,model_golf_event_checkout_wizard,,1,1,1,1
+access_golf_staff_all,golf.staff,model_golf_staff,,1,1,1,1
+access_golf_fee_rate,golf.fee.rate,model_golf_fee_rate,base.group_user,1,1,1,1
+access_golf_sport,golf.sport,model_golf_sport,base.group_user,1,1,1,1
