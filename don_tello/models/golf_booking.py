@@ -48,26 +48,27 @@ class GolfBooking(models.Model):
         ('1_clase_1h_4pax', 'Padel/Tenis (grupo 4 pax)'),
     ], string="Modalidad Escuela Deportiva")
 
-    show_golf_extras = fields.Boolean(compute="_compute_visibility", store=True)
-    show_lesson_type = fields.Boolean(compute="_compute_visibility", store=True)
-    show_instructor = fields.Boolean(compute="_compute_visibility", store=True)
-    show_school = fields.Boolean(compute="_compute_visibility", store=True)
+    has_buggy = fields.Boolean(string="¿Incluir buggy?")
+    has_locker = fields.Boolean(string="¿Incluir taquilla?")
+    has_parking = fields.Boolean(string="¿Incluir parking?")
 
     @api.model
     def _get_day_condition(self, dt):
         return 'weekend' if dt.weekday() >= 5 else 'laborable'
 
-    @api.depends('booking_datetime', 'booking_type', 'member_id', 'has_buggy', 'has_locker', 'has_parking')
+    @api.depends(
+    'booking_datetime', 'booking_type', 'member_id',
+    'has_buggy', 'has_locker', 'has_parking',
+    'school_condition', 'lesson_type'
+    )
     def _compute_price(self):
         for rec in self:
             rec.price = 0.0
+
             if not rec.member_id or not rec.booking_datetime or not rec.booking_type:
                 continue
 
-            # Día: laborable o festivo
-            condition = rec._get_day_condition(rec.booking_datetime)
-
-            # Tipo de usuario
+            # Tipo de usuario real
             abono = rec.member_id.tipo_membresia_id
             if not abono:
                 user_type = 'no_abonado'
@@ -76,73 +77,79 @@ class GolfBooking(models.Model):
             elif abono.code == 'HOI':
                 user_type = 'hole_in_one'
             else:
-                user_type = 'club'  
+                user_type = 'club'
 
-            # Tipo de servicio principal
-            rate_type = rec.booking_type
+            # Condición del día
+            condition = 'weekend' if rec.booking_datetime.weekday() >= 5 else 'laborable'
 
-            # Green Fee
-            if rate_type == 'green_fee':
-                green_fee = self.env['golf.fee.rate'].search([
-                    ('type', '=', 'green_fee'),
-                    ('user_type', '=', user_type),
-                    ('condition', '=', condition),
-                    ('active', '=', True)
-                ], limit=1)
-                if green_fee:
-                    rec.price += green_fee.price
-                
-            elif rate_type == 'school' and rec.school_condition:
-                fee = self.env['golf.fee.rate'].search([
-                    ('type', '=', 'school'),
-                    ('user_type', '=', user_type),
-                    ('condition', '=', rec.school_condition),
-                    ('active', '=', True)
-                ], limit=1)
-                if fee:
-                    rec.price += fee.price
+            # Fitting siempre tarifa 0
+            if rec.booking_type == 'fitting':
+                rec.price = 0.0
+                continue
 
-            # Campo de prácticas u otros
-            elif rate_type in ['practice', 'lesson', 'fitting', 'other']:
-                fee = self.env['golf.fee.rate'].search([
-                    ('type', '=', rate_type),
-                    ('user_type', '=', user_type),
-                    ('condition', '=', condition),
-                    ('active', '=', True)
-                ], limit=1)
-                if fee:
-                    rec.price += fee.price
+            # Si es lesson o school → usar 'abonado' como user_type
+            if rec.booking_type in ['lesson', 'school']:
+                user_type_tarifa = 'abonado'
+            else:
+                user_type_tarifa = user_type
 
-            # Complementos
-            if rec.has_buggy:
-                buggy_fee = self.env['golf.fee.rate'].search([
-                    ('type', '=', 'buggy'),
-                    ('user_type', '=', user_type),
-                    ('condition', '=', condition),
-                    ('active', '=', True)
-                ], limit=1)
-                if buggy_fee:
-                    rec.price += buggy_fee.price
+            # Dominio para buscar tarifa base
+            domain = [
+                ('type', '=', rec.booking_type),
+                ('user_type', '=', user_type_tarifa),
+                ('active', '=', True)
+            ]
 
-            if rec.has_locker:
-                locker_fee = self.env['golf.fee.rate'].search([
-                    ('type', '=', 'locker'),
-                    ('user_type', '=', user_type),
-                    ('condition', '=', 'otros'),
-                    ('active', '=', True)
-                ], limit=1)
-                if locker_fee:
-                    rec.price += locker_fee.price
+            if rec.booking_type == 'lesson':
+                if not rec.lesson_type:
+                    continue
+                domain.append(('condition', '=', rec.lesson_type))
 
-            if rec.has_parking:
-                parking_fee = self.env['golf.fee.rate'].search([
-                    ('type', '=', 'parking'),
-                    ('user_type', '=', user_type),
-                    ('condition', '=', 'otros'),
-                    ('active', '=', True)
-                ], limit=1)
-                if parking_fee:
-                    rec.price += parking_fee.price
+            elif rec.booking_type == 'school':
+                if not rec.school_condition:
+                    continue
+                domain.append(('condition', '=', rec.school_condition))
+
+            else:
+                domain.append(('condition', '=', condition))
+
+            tarifa = self.env['golf.fee.rate'].search(domain, limit=1)
+            if tarifa:
+                rec.price += tarifa.price
+
+            # Extras solo aplican si es green_fee
+            if rec.booking_type == 'green_fee':
+                user_type_extra = 'abonado'
+
+                if rec.has_buggy:
+                    buggy = self.env['golf.fee.rate'].search([
+                        ('type', '=', 'buggy'),
+                        ('user_type', '=', user_type_extra),
+                        ('condition', '=', condition),
+                        ('active', '=', True)
+                    ], limit=1)
+                    if buggy:
+                        rec.price += buggy.price
+
+                if rec.has_locker:
+                    locker = self.env['golf.fee.rate'].search([
+                        ('type', '=', 'locker'),
+                        ('user_type', '=', user_type_extra),
+                        ('condition', '=', 'otros'),
+                        ('active', '=', True)
+                    ], limit=1)
+                    if locker:
+                        rec.price += locker.price
+
+                if rec.has_parking:
+                    parking = self.env['golf.fee.rate'].search([
+                        ('type', '=', 'parking'),
+                        ('user_type', '=', user_type_extra),
+                        ('condition', '=', 'otros'),
+                        ('active', '=', True)
+                    ], limit=1)
+                    if parking:
+                        rec.price += parking.price
 
     @api.constrains('booking_datetime', 'instructor_id')
     def _check_instructor_availability(self):
@@ -156,15 +163,5 @@ class GolfBooking(models.Model):
                 if overlapping:
                     raise ValidationError("El instructor ya tiene otra reserva en ese horario.")
                 
-    @api.depends('booking_type', 'lesson_type')
-    def _compute_visibility(self):
-        for rec in self:
-            rec.show_golf_extras = rec.booking_type == 'green_fee'
-            rec.show_lesson_type = rec.booking_type == 'lesson'
-            rec.show_instructor = (
-                rec.booking_type == 'fitting' or
-                (rec.booking_type == 'lesson' and rec.lesson_type == 'individual')
-            )
-            rec.show_school = rec.booking_type == 'school'
 
 
