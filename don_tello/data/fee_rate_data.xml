@@ -119,8 +119,9 @@
       <field name="name">Clase Golf Infantil Abonado (1h/sem)</field>
       <field name="type">lesson</field>
       <field name="user_type">abonado</field>
-      <field name="condition">1_clase_1h_grupo</field>
+      <field name="condition">group</field>
       <field name="price">35.0</field>
+      <field name="active">1</field>
     </record>
     <record id="tarifa_clase_golf_adulto_bono" model="golf.fee.rate">
       <field name="name">Clase Golf Adultos (Bono 12 clases)</field>
@@ -128,6 +129,7 @@
       <field name="user_type">abonado</field>
       <field name="condition">bono</field>
       <field name="price">120.0</field>
+      <field name="active">1</field>
     </record>
     <record id="tarifa_clase_golf_adulto_individual" model="golf.fee.rate">
       <field name="name">Clase Golf Adultos Individual (30min)</field>
@@ -135,6 +137,7 @@
       <field name="user_type">abonado</field>
       <field name="condition">individual</field>
       <field name="price">15.0</field>
+      <field name="active">1</field>
     </record>
     <record id="tarifa_clase_equitacion_1h" model="golf.fee.rate">
       <field name="name">Clase Equitación 1h/sem Abonado</field>
@@ -142,6 +145,7 @@
       <field name="user_type">abonado</field>
       <field name="condition">1_clase_1h_grupo</field>
       <field name="price">55.0</field>
+      <field name="active">1</field>
     </record>
     <record id="tarifa_clase_equitacion_2h" model="golf.fee.rate">
       <field name="name">Clase Equitación 2h/sem Abonado</field>
@@ -149,6 +153,7 @@
       <field name="user_type">abonado</field>
       <field name="condition">2_clases_1h_grupo</field>
       <field name="price">85.0</field>
+      <field name="active">1</field>
     </record>
     <record id="tarifa_clase_padel_3pax" model="golf.fee.rate">
       <field name="name">Clase Padel/Tenis Abonado (3pax)</field>
@@ -156,6 +161,7 @@
       <field name="user_type">abonado</field>
       <field name="condition">1_clase_1h_3pax</field>
       <field name="price">27.0</field>
+      <field name="active">1</field>
     </record>
     <record id="tarifa_clase_padel_4pax" model="golf.fee.rate">
       <field name="name">Clase Padel/Tenis Abonado (4pax)</field>
@@ -163,6 +169,7 @@
       <field name="user_type">abonado</field>
       <field name="condition">1_clase_1h_4pax</field>
       <field name="price">21.0</field>
+      <field name="active">1</field>
     </record>
 
 
@@ -174,76 +181,6 @@
       <field name="condition">consulta</field>
       <field name="active">True</field>
     </record>
-    <!-- <record id="tarifa_clase_tecnologica_abonados" model="golf.fee.rate">
-      <field name="name">Clase Tecnológica Abonados</field>
-      <field name="type">lesson</field>
-      <field name="user_type">abonado</field>
-      <field name="price">0.0</field>
-      <field name="condition">consulta</field>
-      <field name="active">True</field>
-    </record>
-    <record id="tarifa_clase_tecnologica_no_abonados" model="golf.fee.rate">
-      <field name="name">Clase Tecnológica No Abonados</field>
-      <field name="type">lesson</field>
-      <field name="user_type">no_abonado</field>
-      <field name="price">0.0</field>
-      <field name="condition">consulta</field>
-      <field name="active">True</field>
-    </record>
-    <record id="tarifa_pupillaje_doma" model="golf.fee.rate">
-      <field name="name">Pupillaje y Domas Abonados</field>
-      <field name="type">other</field>
-      <field name="user_type">abonado</field>
-      <field name="price">0.0</field>
-      <field name="condition">consulta</field>
-      <field name="active">True</field>
-    </record> -->
-
-
-    <!-- <record id="comp_derechos_club" model="golf.fee.rate">
-      <field name="name">Derechos de Club 2025</field>
-      <field name="type">addon</field>
-      <field name="user_type">general</field>
-      <field name="price">595.0</field>
-      <field name="active">True</field>
-    </record>
-    <record id="comp_abono_club_mensual_postpromo" model="golf.fee.rate">
-      <field name="name">Cuota Club después promoción</field>
-      <field name="type">membership</field>
-      <field name="user_type">abonado</field>
-      <field name="price">45.0</field>
-      <field name="active">True</field>
-    </record>
-    <record id="comp_hijo_25_29" model="golf.fee.rate">
-      <field name="name">Hijo/a 25-29 años</field>
-      <field name="type">addon</field>
-      <field name="user_type">hijo</field>
-      <field name="price">10.0</field>
-      <field name="active">True</field>
-    </record>
-    <record id="comp_hijo_30_34" model="golf.fee.rate">
-      <field name="name">Hijo/a 30-34 años</field>
-      <field name="type">addon</field>
-      <field name="user_type">hijo</field>
-      <field name="price">15.0</field>
-      <field name="active">True</field>
-    </record>
-    <record id="dj_hio_progresivo_1er_ano" model="golf.fee.rate">
-      <field name="name">D.J Hole in One (1er año)</field>
-      <field name="type">game_rights</field>
-      <field name="user_type">abonado</field>
-      <field name="condition">progresion_1er_ano</field>
-      <field name="price">10.0</field>
-      <field name="active">True</field>
-    </record>
-    <record id="dj_hio_progresivo_2do_ano" model="golf.fee.rate">
-      <field name="name">D.J Hole in One (2º año - 6 meses)</field>
-      <field name="type">game_rights</field>
-      <field name="user_type">abonado</field>
-      <field name="condition">progresion_2do_ano</field>
-      <field name="price">25.0</field>
-      <field name="active">True</field>
-    </record> -->
     <record id="dj_hio_1er_jugador" model="golf.fee.rate">
       <field name="name">D.J 1er jugador (Hole in One)</field>
       <field name="type">game_rights</field>
@@ -252,22 +189,6 @@
       <field name="price">45.0</field>
       <field name="active">True</field>
     </record>
-    <!-- <record id="dj_hio_2do_jugador" model="golf.fee.rate">
-      <field name="name">D.J 2º jugador (Hole in One)</field>
-      <field name="type">game_rights</field>
-      <field name="user_type">abonado</field>
-      <field name="condition">segundo_jugador</field>
-      <field name="price">35.0</field>
-      <field name="active">True</field>
-    </record>
-    <record id="dj_hio_hijos" model="golf.fee.rate">
-      <field name="name">D.J Hij@/s (Hole in One)</field>
-      <field name="type">game_rights</field>
-      <field name="user_type">hijo</field>
-      <field name="condition">hole_in_one</field>
-      <field name="price">30.0</field>
-      <field name="active">True</field>
-    </record> -->
     <record id="dj_birdie_1er_jugador" model="golf.fee.rate">
       <field name="name">D.J 1er jugador (Plan Birdie)</field>
       <field name="type">game_rights</field>
@@ -276,21 +197,5 @@
       <field name="price">35.0</field>
       <field name="active">True</field>
     </record>
-    <!-- <record id="dj_birdie_2do_jugador" model="golf.fee.rate">
-      <field name="name">D.J 2º jugador (Plan Birdie)</field>
-      <field name="type">game_rights</field>
-      <field name="user_type">abonado</field>
-      <field name="condition">segundo_jugador</field>
-      <field name="price">30.0</field>
-      <field name="active">True</field>
-    </record>
-    <record id="dj_birdie_hijos" model="golf.fee.rate">
-      <field name="name">D.J Hij@/s (Plan Birdie)</field>
-      <field name="type">game_rights</field>
-      <field name="user_type">hijo</field>
-      <field name="condition">plan_birdie</field>
-      <field name="price">30.0</field>
-      <field name="active">True</field>
-    </record> -->
   </data>
 </odoo>
