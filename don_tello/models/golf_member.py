@@ -15,8 +15,19 @@ class GolfMember(models.Model):
     fecha_alta = fields.Date(string='Fecha de Alta', default=fields.Date.today)
     fecha_baja = fields.Date(string='Fecha de Baja')
 
-    tipo_membresia_id = fields.Many2one('golf.membership.type', string='Tipo de Membresía', tracking=True)
-    tipo_membresia_auto = fields.Char(string='Membresía Asignada', compute='_compute_tipo_membresia', store=True, readonly=True)
+    tipo_membresia_id = fields.Many2one(
+        'golf.membership.type',
+        string='Tipo de Membresía',
+        default=lambda self: self.env.ref('don_tello.membership_type_club').id,
+        required=True
+    )
+
+    cuota_mensual = fields.Float(
+        string="Cuota mensual (€)",
+        compute="_compute_cuota_mensual",
+        store=True,
+        readonly=True
+    )
 
     partner_id = fields.Many2one('res.partner', string='Contacto Relacionado')
 
@@ -43,24 +54,24 @@ class GolfMember(models.Model):
             else:
                 rec.estado_pago = 'al_dia'
 
-    @api.depends('edad', 'jugador_golf')
-    def _compute_tipo_membresia(self):
+    @api.depends('tipo_membresia_id')
+    def _compute_cuota_mensual(self):
         for rec in self:
-            tipo = ''
-            codigo = None
+            cuota_base = rec.tipo_membresia_id.monthly_fee or 0.0
+            cuota_dj = 0.0
 
-            if not rec.jugador_golf:
-                tipo = 'Club'
-                codigo = 'CLUB'
-            elif rec.edad >= 50:
-                tipo = 'Hole in One'
-                codigo = 'HOI'
-            else:
-                tipo = 'Birdie'
-                codigo = 'BIRDIE'
+            if rec.tipo_membresia_id.code in ['BIRDIE', 'HOI']:
+                # Buscar tarifa de derechos de juego para este plan
+                plan = 'plan_birdie' if rec.tipo_membresia_id.code == 'BIRDIE' else 'hole_in_one'
 
-            rec.tipo_membresia_auto = tipo
+                dj_tarifa = self.env['golf.fee.rate'].search([
+                    ('type', '=', 'game_rights'),
+                    ('user_type', '=', 'abonado'),
+                    ('condition', '=', 'primer_jugador'),
+                    ('active', '=', True),
+                    ('name', 'ilike', plan.replace('_', ' '))
+                ], limit=1)
 
-            # Buscar y asignar el registro real en la base de datos
-            membresia = self.env['golf.membership.type'].search([('code', '=', codigo)], limit=1)
-            rec.tipo_membresia_id = membresia if membresia else False
+                cuota_dj = dj_tarifa.price if dj_tarifa else 0.0
+
+            rec.cuota_mensual = cuota_base + cuota_dj

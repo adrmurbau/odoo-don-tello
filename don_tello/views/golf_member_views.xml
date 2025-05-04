@@ -17,17 +17,16 @@
                         </group>
 
                         <group string="Membresía">
-                            <!-- <field name="tipo_membresia_id"/> -->
                             <field name="jugador_golf"/>
-                            <field name="tipo_membresia_auto" readonly="1"/>
+                            <field name="tipo_membresia_id" readonly="0"/>
                             <field name="fecha_alta"/>
                             <field name="fecha_baja"/>
                             <field name="partner_id"/>
                         </group>
 
                         <group string="Estado Económico">
+                            <field name="cuota_mensual"/>
                             <field name="cuotas_pendientes"/>
-                            <!-- <field name="currency_id"/> -->
                             <field name="estado_pago" readonly="1"/>
                         </group>
 
