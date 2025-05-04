@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- VISTA KANBAN PERSONALIZADA -->
+    <record id="view_golf_member_kanban_personalizado" model="ir.ui.view">
+        <field name="name">golf.member.kanban.personal</field>
+        <field name="model">golf.member</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="estado_pago">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="o_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div><field name="tipo_membresia_auto"/></div>
+                                <div><field name="phone"/></div>
+                                <div><field name="email"/></div>
+                                <div><field name="estado_pago"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- VISTA GRÁFICA DE SOCIOS -->
+    <record id="view_golf_member_graph" model="ir.ui.view">
+        <field name="name">golf.member.graph</field>
+        <field name="model">golf.member</field>
+        <field name="arch" type="xml">
+            <graph string="Distribución de Socios por Membresía" type="bar">
+                <field name="tipo_membresia_auto" type="row"/>
+                <field name="estado_pago" type="col"/>
+                <field name="id" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ACCIÓN VISTA KANBAN -->
+    <record id="action_golf_member_kanban" model="ir.actions.act_window">
+        <field name="name">Vista Kanban Socios</field>
+        <field name="res_model">golf.member</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_golf_member_kanban_personalizado"/>
+    </record>
+
+    <!-- ACCIÓN VISTA GRÁFICA -->
+    <record id="action_golf_member_graph" model="ir.actions.act_window">
+        <field name="name">Gráfico de Socios</field>
+        <field name="res_model">golf.member</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_golf_member_graph"/>
+    </record>
+
+    <!-- MENÚ PARA VISTA KANBAN -->
+    <menuitem id="menu_golf_member_kanban"
+              name="Vista Kanban de Socios"
+              parent="don_tello.menu_golf_members_root"
+              action="action_golf_member_kanban"
+              sequence="20"/>
+
+    <!-- MENÚ PARA VISTA GRÁFICA -->
+    <menuitem id="menu_golf_member_graph"
+              name="Gráfico de Socios"
+              parent="don_tello.menu_golf_members_root"
+              action="action_golf_member_graph"
+              sequence="30"/>
+</odoo>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Vista Formulario -->
+        <record id="view_golf_fee_rate_form" model="ir.ui.view">
+            <field name="name">golf.fee.rate.form</field>
+            <field name="model">golf.fee.rate</field>
+            <field name="arch" type="xml">
+                <form string="Tarifa Oficial del Club">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="type"/>
+                            <field name="user_type"/>
+                            <field name="condition"/>
+                            <field name="price"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Vista Lista -->
+        <record id="view_golf_fee_rate_list" model="ir.ui.view">
+            <field name="name">golf.fee.rate.list</field>
+            <field name="model">golf.fee.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Tarifas Oficiales del Club">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="user_type"/>
+                    <field name="condition"/>
+                    <field name="price"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Acción -->
+        <record id="action_golf_fee_rate" model="ir.actions.act_window">
+            <field name="name">Tarifas Oficiales</field>
+            <field name="res_model">golf.fee.rate</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Menú -->
+        <menuitem id="menu_golf_fee_rate"
+                  name="Tarifas Oficiales"
+                  parent="golf_main_menu"
+                  sequence="60"
+                  action="action_golf_fee_rate"/>
+
+    </data>
+</odoo>
+
